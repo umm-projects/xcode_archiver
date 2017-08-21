@@ -1,10 +1,20 @@
 # What?
 
-This repository is `Package Template` for Unity uses npm.
+* `xcodebuild` コマンドを用いて iOS 向けビルド成果物のパッケージングを行います。
 
 # Why?
 
-Please check [here](https://github.com/shadowmint/unity-package-template/blob/master/docs/npm.md)
+* 毎回 Xcode を開いてビルドするのも大変なので、自動化してみました。
+
+# Install
+
+```shell
+$ npm install @umm/xcode_archiver
+```
+
+# Usage
+
+* 組み込むだけで、自動で効果を発揮します。
 
 # License
 
