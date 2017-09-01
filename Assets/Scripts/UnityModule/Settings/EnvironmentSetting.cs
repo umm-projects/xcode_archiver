@@ -6,6 +6,7 @@ namespace UnityModule.Settings {
     /// 環境設定を拡張
     /// </summary>
     // ReSharper disable once PartialTypeWithSinglePart
+    // ReSharper disable once RedundantExtendsListEntry
     public partial class EnvironmentSetting : Setting<EnvironmentSetting> {
 
         /// <summary>
