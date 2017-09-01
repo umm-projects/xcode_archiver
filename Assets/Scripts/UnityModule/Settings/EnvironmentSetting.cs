@@ -14,7 +14,7 @@ namespace UnityModule.Settings {
         /// Xcode Archive を起動するかどうかの実体
         /// </summary>
         [SerializeField]
-        private bool shouldRunXcodeArchive;
+        private bool shouldRunXcodeArchive = true;
 
         /// <summary>
         /// Xcode Archive を起動するかどうか
