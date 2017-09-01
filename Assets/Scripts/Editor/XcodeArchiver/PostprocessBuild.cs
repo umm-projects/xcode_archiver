@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEditor.Build;
+using UnityModule.Settings;
 
 namespace XcodeArchiver {
 
@@ -58,6 +59,9 @@ namespace XcodeArchiver {
 
         public void OnPostprocessBuild(BuildTarget target, string path) {
             if (target != BuildTarget.iOS) {
+                return;
+            }
+            if (!EnvironmentSetting.Instance.ShouldRunXcodeArchive) {
                 return;
             }
             this.ExportedPath = path;
