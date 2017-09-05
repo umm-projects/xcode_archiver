@@ -9,7 +9,7 @@
 # Install
 
 ```shell
-$ npm install @umm/xcode_archiver
+$ npm install github:umm-projects/xcode_archiver.git
 ```
 
 # Usage
