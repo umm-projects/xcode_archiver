@@ -9,6 +9,8 @@ namespace XcodeArchiver {
 
     public class PostprocessBuild : IPostprocessBuild {
 
+        public const int POSTPROCESS_BUILD_CALLBACK_ORDER = 100;
+
         /// <summary>
         /// xcodebuild コマンドのパス
         /// </summary>
@@ -53,7 +55,7 @@ namespace XcodeArchiver {
 
         public int callbackOrder {
             get {
-                return 0;
+                return POSTPROCESS_BUILD_CALLBACK_ORDER;
             }
         }
 
@@ -78,7 +80,11 @@ namespace XcodeArchiver {
 
         private void ExecuteBuild() {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat(" -project \"{0}/Unity-iPhone.xcodeproj\"", this.ExportedPath);
+            if (EnvironmentSetting.Instance.UseXCWorkspace) {
+                sb.AppendFormat(" -workspace \"{0}/Unity-iPhone.xcworkspace\"", this.ExportedPath);
+            } else {
+                sb.AppendFormat(" -project \"{0}/Unity-iPhone.xcodeproj\"", this.ExportedPath);
+            }
             sb.AppendFormat(" -scheme \"Unity-iPhone\"");
             sb.AppendFormat(" -archivePath \"{0}/Unity-iPhone.xcarchive\" ", this.ExportedPath);
             sb.AppendFormat(" -sdk iphoneos");
