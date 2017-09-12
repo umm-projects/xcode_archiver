@@ -9,6 +9,8 @@ namespace XcodeArchiver {
 
     public class PostprocessBuild : IPostprocessBuild {
 
+        public const int POSTPROCESS_BUILD_CALLBACK_ORDER = 100;
+
         /// <summary>
         /// xcodebuild コマンドのパス
         /// </summary>
@@ -53,7 +55,7 @@ namespace XcodeArchiver {
 
         public int callbackOrder {
             get {
-                return 0;
+                return POSTPROCESS_BUILD_CALLBACK_ORDER;
             }
         }
 
