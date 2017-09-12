@@ -78,7 +78,11 @@ namespace XcodeArchiver {
 
         private void ExecuteBuild() {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat(" -project \"{0}/Unity-iPhone.xcodeproj\"", this.ExportedPath);
+            if (EnvironmentSetting.Instance.UseXCWorkspace) {
+                sb.AppendFormat(" -workspace \"{0}/Unity-iPhone.xcworkspace\"", this.ExportedPath);
+            } else {
+                sb.AppendFormat(" -project \"{0}/Unity-iPhone.xcodeproj\"", this.ExportedPath);
+            }
             sb.AppendFormat(" -scheme \"Unity-iPhone\"");
             sb.AppendFormat(" -archivePath \"{0}/Unity-iPhone.xcarchive\" ", this.ExportedPath);
             sb.AppendFormat(" -sdk iphoneos");
