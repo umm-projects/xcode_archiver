@@ -41,7 +41,7 @@ namespace XcodeArchiver {
         /// </summary>
         private static readonly Dictionary<ExportOptionType, string> EXPORT_DIRECTORY_MAP = new Dictionary<ExportOptionType, string>() {
             { ExportOptionType.AppStore, "export-app-store" },
-            { ExportOptionType.AdHoc, "export-app-store" },
+            { ExportOptionType.AdHoc   , "export-ad-hoc" },
         };
 
         /// <summary>
