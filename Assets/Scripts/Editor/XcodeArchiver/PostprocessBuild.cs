@@ -71,7 +71,7 @@ namespace XcodeArchiver {
             this.Prepare();
             this.ExecuteBuildAndArchive();
             this.ExecuteExport(ExportOptionType.AdHoc);
-            if (EnvironmentSetting.Instance.ShouldExportAppStoreArchive) {
+            if (EnvironmentSetting.Instance.ShouldExportAppStoreArchive && !EditorUserBuildSettings.development) {
                 this.ExecuteExport(ExportOptionType.AppStore);
             }
         }
