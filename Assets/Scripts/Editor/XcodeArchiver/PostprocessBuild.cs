@@ -127,23 +127,20 @@ namespace XcodeArchiver {
 
         private void GenerateExportOptionsPlist(ExportOptionType exportOptionType) {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            sb.AppendFormat("<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">");
-            sb.AppendFormat("<plist version=\"1.0\">");
-            sb.AppendFormat("<dict>");
-            sb.AppendFormat("\t<key>method</key>");
-            sb.AppendFormat("\t<string>{0}</string>", EXPORT_OPTION_MAP[exportOptionType]);
-            if (exportOptionType != ExportOptionType.AppStore) {
-                // AppStore の場合であっても bitcode (中間言語生成) は Off にしといた方が安全かも…。
-                // 一部の広告 SDK が Bitcode サポートしていないことがあったりする。
-                sb.AppendFormat("\t<key>compileBitcode</key>");
-                sb.AppendFormat("\t<false/>");
-                // iOS のオンデマンドリソース対応はデフォルト Off で良いかと。
-                sb.AppendFormat("\t<key>embedOnDemandResourcesAssetPacksInBundle</key>");
-                sb.AppendFormat("\t<false/>");
-            }
-            sb.AppendFormat("</dict>");
-            sb.AppendFormat("</plist>");
+            sb.AppendFormat("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            sb.AppendFormat("<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n");
+            sb.AppendFormat("<plist version=\"1.0\">\n");
+            sb.AppendFormat("<dict>\n");
+            sb.AppendFormat("\t<key>method</key>\n");
+            sb.AppendFormat("\t<string>{0}</string>\n", EXPORT_OPTION_MAP[exportOptionType]);
+            // 一部の広告 SDK が Bitcode サポートしていないことがあったりする。
+            sb.AppendFormat("\t<key>compileBitcode</key>\n");
+            sb.AppendFormat("\t<false/>\n");
+            // iOS のオンデマンドリソース対応はデフォルト Off で良いかと。
+            sb.AppendFormat("\t<key>embedOnDemandResourcesAssetPacksInBundle</key>\n");
+            sb.AppendFormat("\t<false/>\n");
+            sb.AppendFormat("</dict>\n");
+            sb.AppendFormat("</plist>\n");
             StreamWriter w = new StreamWriter(string.Format("{0}/{1}.plist", this.ExportedPath, EXPORT_OPTION_MAP[exportOptionType]));
             w.Write(sb.ToString());
             w.Close();
