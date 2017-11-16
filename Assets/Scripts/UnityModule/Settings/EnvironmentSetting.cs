@@ -28,6 +28,24 @@ namespace UnityModule.Settings {
         }
 
         /// <summary>
+        /// AppStore 用 Archive を出力するかどうかの実体
+        /// </summary>
+        [SerializeField]
+        private bool shouldExportAppStoreArchive = true;
+
+        /// <summary>
+        /// AppStore 用 Archive を出力するかどうか
+        /// </summary>
+        public bool ShouldExportAppStoreArchive {
+            get {
+                return this.shouldExportAppStoreArchive;
+            }
+            set {
+                this.shouldExportAppStoreArchive = value;
+            }
+        }
+
+        /// <summary>
         /// .xcworkspace を利用しているかどうかの実体
         /// </summary>
         [SerializeField]
