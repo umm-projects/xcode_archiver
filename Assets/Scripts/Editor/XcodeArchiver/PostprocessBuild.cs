@@ -69,8 +69,11 @@ namespace XcodeArchiver {
             this.ExportedPath = path;
 
             this.Prepare();
-            this.ExecuteBuild();
-            this.ExecuteArchive();
+            this.ExecuteBuildAndArchive();
+            this.ExecuteExport(ExportOptionType.AdHoc);
+            if (EnvironmentSetting.Instance.ShouldExportAppStoreArchive) {
+                this.ExecuteExport(ExportOptionType.AppStore);
+            }
         }
 
         private void Prepare() {
@@ -78,7 +81,7 @@ namespace XcodeArchiver {
             this.GenerateExportOptionsPlist(ExportOptionType.AdHoc);
         }
 
-        private void ExecuteBuild() {
+        private void ExecuteBuildAndArchive() {
             StringBuilder sb = new StringBuilder();
             if (EnvironmentSetting.Instance.UseXCWorkspace) {
                 sb.AppendFormat(" -workspace \"{0}/Unity-iPhone.xcworkspace\"", this.ExportedPath);
@@ -107,12 +110,12 @@ namespace XcodeArchiver {
             process.Close();
         }
 
-        private void ExecuteArchive() {
+        private void ExecuteExport(ExportOptionType exportOptionType) {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat(" -exportArchive");
             sb.AppendFormat(" -archivePath \"{0}/Unity-iPhone.xcarchive\" ", this.ExportedPath);
             sb.AppendFormat(" -exportPath \"{0}/build\"", this.ExportedPath);
-            sb.AppendFormat(" -exportOptionsPlist \"{0}/{1}.plist\"", this.ExportedPath, EXPORT_OPTION_MAP[ExportOptionType.AdHoc]);
+            sb.AppendFormat(" -exportOptionsPlist \"{0}/{1}.plist\"", this.ExportedPath, EXPORT_OPTION_MAP[exportOptionType]);
             System.Diagnostics.Process process = new System.Diagnostics.Process {
                 StartInfo = {
                     FileName = PATH_XCODEBUILD_BIN,
