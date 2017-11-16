@@ -37,6 +37,14 @@ namespace XcodeArchiver {
         };
 
         /// <summary>
+        /// 出力オプションと出力先ディレクトリ名のマップ
+        /// </summary>
+        private static readonly Dictionary<ExportOptionType, string> EXPORT_DIRECTORY_MAP = new Dictionary<ExportOptionType, string>() {
+            { ExportOptionType.AppStore, "export-app-store" },
+            { ExportOptionType.AdHoc, "export-app-store" },
+        };
+
+        /// <summary>
         /// パスの実体
         /// </summary>
         private string exportedPath;
@@ -114,7 +122,7 @@ namespace XcodeArchiver {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat(" -exportArchive");
             sb.AppendFormat(" -archivePath \"{0}/Unity-iPhone.xcarchive\" ", this.ExportedPath);
-            sb.AppendFormat(" -exportPath \"{0}/build\"", this.ExportedPath);
+            sb.AppendFormat(" -exportPath \"{0}/{1}\"", this.ExportedPath, EXPORT_DIRECTORY_MAP[exportOptionType]);
             sb.AppendFormat(" -exportOptionsPlist \"{0}/{1}.plist\"", this.ExportedPath, EXPORT_OPTION_MAP[exportOptionType]);
             System.Diagnostics.Process process = new System.Diagnostics.Process {
                 StartInfo = {
