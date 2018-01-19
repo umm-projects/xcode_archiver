@@ -102,6 +102,7 @@ namespace XcodeArchiver {
             sb.AppendFormat(" -archivePath \"{0}/Unity-iPhone.xcarchive\" ", this.ExportedPath);
             sb.AppendFormat(" -sdk iphoneos");
             sb.AppendFormat(" -configuration Release");
+            sb.AppendFormat(" -allowProvisioningUpdates");
             sb.AppendFormat(" clean archive");
             sb.AppendFormat(" CODE_SIGN_IDENTITY=\"iPhone Developer\"");
             sb.AppendFormat(" DEVELOPMENT_TEAM=\"{0}\"", PlayerSettings.iOS.appleDeveloperTeamID);
