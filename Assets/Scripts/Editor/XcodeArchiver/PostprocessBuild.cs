@@ -91,11 +91,13 @@ namespace XcodeArchiver {
 
         private void ExecuteBuildAndArchive() {
             StringBuilder sb = new StringBuilder();
-            if (EnvironmentSetting.Instance.UseXCWorkspace) {
-                sb.AppendFormat(" -workspace \"{0}/Unity-iPhone.xcworkspace\"", this.ExportedPath);
-            } else {
-                sb.AppendFormat(" -project \"{0}/Unity-iPhone.xcodeproj\"", this.ExportedPath);
-            }
+            // xcworkspace 利用可否は当該ディレクトリの有無で判定
+            sb.AppendFormat(
+                Directory.Exists(string.Format("{0}/Unity-iPhone.xcworkspace", this.ExportedPath))
+                    ? " -workspace \"{0}/Unity-iPhone.xcworkspace\""
+                    : " -project \"{0}/Unity-iPhone.xcodeproj\"",
+                this.ExportedPath
+            );
             sb.AppendFormat(" -scheme \"Unity-iPhone\"");
             sb.AppendFormat(" -archivePath \"{0}/Unity-iPhone.xcarchive\" ", this.ExportedPath);
             sb.AppendFormat(" -sdk iphoneos");

@@ -45,24 +45,6 @@ namespace UnityModule.Settings {
             }
         }
 
-        /// <summary>
-        /// .xcworkspace を利用しているかどうかの実体
-        /// </summary>
-        [SerializeField]
-        private bool useXCWorkspace = true;
-
-        /// <summary>
-        /// .xcworkspace を利用しているかどうか
-        /// </summary>
-        public bool UseXCWorkspace {
-            get {
-                return this.useXCWorkspace;
-            }
-            set {
-                this.useXCWorkspace = value;
-            }
-        }
-
     }
 
 }
