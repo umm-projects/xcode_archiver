@@ -127,6 +127,7 @@ namespace XcodeArchiver {
             sb.AppendFormat(" -archivePath \"{0}/Unity-iPhone.xcarchive\" ", this.ExportedPath);
             sb.AppendFormat(" -exportPath \"{0}/{1}\"", this.ExportedPath, EXPORT_DIRECTORY_MAP[exportOptionType]);
             sb.AppendFormat(" -exportOptionsPlist \"{0}/{1}.plist\"", this.ExportedPath, EXPORT_OPTION_MAP[exportOptionType]);
+            sb.AppendFormat(" -allowProvisioningUpdates");
             System.Diagnostics.Process process = new System.Diagnostics.Process {
                 StartInfo = {
                     FileName = PATH_XCODEBUILD_BIN,
