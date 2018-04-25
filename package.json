@@ -29,7 +29,7 @@
     "scripts"
   ],
   "dependencies": {
-    "@umm/environment_setting": "umm-projects/environment_settings#^1.0.0",
+    "@umm/environment_setting": "umm-projects/environment_setting#^1.0.0",
     "@umm/scripts": "umm-projects/scripts#^1.0.0"
   },
   "devDependencies": {}
