@@ -3,11 +3,18 @@ using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEditor.Build;
+#if UNITY_2018_1_OR_NEWER
+using UnityEditor.Build.Reporting;
+#endif
 using UnityModule.Settings;
 
 namespace XcodeArchiver {
 
-    public class PostprocessBuild : IPostprocessBuild {
+#if UNITY_2018_1_OR_NEWER
+    public class PreprocessBuild : IPreprocessBuildWithReport {
+#else
+    public class PreprocessBuild : IPreprocessBuild {
+#endif
 
         public const int POSTPROCESS_BUILD_CALLBACK_ORDER = 100;
 
@@ -67,6 +74,17 @@ namespace XcodeArchiver {
             }
         }
 
+#if UNITY_2018_1_OR_NEWER
+        public void OnPreprocessBuild(BuildReport report)
+        {
+            if (report.summary.platform != BuildTarget.iOS) {
+                return;
+            }
+            if (!EnvironmentSetting.Instance.ShouldRunXcodeArchive) {
+                return;
+            }
+            this.ExportedPath = report.summary.outputPath;
+#else
         public void OnPostprocessBuild(BuildTarget target, string path) {
             if (target != BuildTarget.iOS) {
                 return;
@@ -75,6 +93,7 @@ namespace XcodeArchiver {
                 return;
             }
             this.ExportedPath = path;
+#endif
 
             this.Prepare();
             this.ExecuteBuildAndArchive();
