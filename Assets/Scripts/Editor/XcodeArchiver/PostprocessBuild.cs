@@ -11,9 +11,9 @@ using UnityModule.Settings;
 namespace XcodeArchiver {
 
 #if UNITY_2018_1_OR_NEWER
-    public class PreprocessBuild : IPreprocessBuildWithReport {
+    public class PostprocessBuild : IPostprocessBuildWithReport {
 #else
-    public class PreprocessBuild : IPreprocessBuild {
+    public class PostprocessBuild : IPostprocessBuild {
 #endif
 
         public const int POSTPROCESS_BUILD_CALLBACK_ORDER = 100;
@@ -75,7 +75,7 @@ namespace XcodeArchiver {
         }
 
 #if UNITY_2018_1_OR_NEWER
-        public void OnPreprocessBuild(BuildReport report)
+        public void OnPostprocessBuild(BuildReport report)
         {
             if (report.summary.platform != BuildTarget.iOS) {
                 return;
