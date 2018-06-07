@@ -1,0 +1,13 @@
+{
+    "name": "umm@xcode_archiver-Editor",
+    "references": [
+        "umm@xcode_archiver",
+        "umm@setting_core"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
