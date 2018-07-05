@@ -1,6 +1,6 @@
 {
   "name": "@umm/xcode_archiver",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Run xcodebuild on PostprocessBuild",
   "homepage": "https://github.com/umm-projects/xcode_archiver",
   "bugs": {
