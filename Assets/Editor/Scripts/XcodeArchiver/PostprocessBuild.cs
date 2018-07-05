@@ -4,6 +4,7 @@ using System.Text;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEditor.Build;
+using UnityEngine;
 #if UNITY_2018_1_OR_NEWER
 using UnityEditor.Build.Reporting;
 #endif
