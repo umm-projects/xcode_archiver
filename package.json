@@ -2,9 +2,9 @@
   "name": "@umm/xcode_archiver",
   "version": "2.1.2",
   "description": "Run xcodebuild on PostprocessBuild",
-  "homepage": "https://github.com/umm-projects/xcode_archiver",
+  "homepage": "https://github.com/umm/xcode_archiver",
   "bugs": {
-    "url": "https://github.com/umm-projects/xcode_archiver/issues"
+    "url": "https://github.com/umm/xcode_archiver/issues"
   },
   "scripts": {
     "umm:init": "umm-init",
@@ -22,15 +22,15 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:umm-projects/xcode_archiver"
+    "url": "git@github.com:umm/xcode_archiver"
   },
   "files": [
     "Assets",
     "scripts"
   ],
   "dependencies": {
-    "@umm/scripts": "umm-projects/scripts#^1.0.0",
-    "@umm/setting_core": "umm-projects/setting_core#^2.0.0"
+    "@umm/scripts": "umm/scripts#^1.0.0",
+    "@umm/setting_core": "umm/setting_core#^2.0.0"
   },
   "devDependencies": {}
 }
