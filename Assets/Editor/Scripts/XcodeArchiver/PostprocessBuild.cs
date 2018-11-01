@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using JetBrains.Annotations;
@@ -23,10 +24,23 @@ namespace XcodeArchiver
 #endif
         private const int PostprocessBuildCallbackOrder = 100;
 
+        private const string EnvironmentVariableBuildClean = "BUILD_CLEAN";
+
+        private const string EnvironmentVariableBuildEnableBitcode = "BUILD_ENABLE_BITCODE";
+
+        private const string EnvironmentVariableBuildEnableDebuggingSymbol = "BUILD_ENABLE_DEBUGGING_SYMBOL";
+
+        private const string EnvironmentVariableBuildUseCcache = "BUILD_USE_CCACHE";
+
         /// <summary>
         /// xcodebuild コマンドのパス
         /// </summary>
         private const string PathXcodebuildBin = "/usr/bin/xcodebuild";
+
+        /// <summary>
+        /// ccache コマンドのパス
+        /// </summary>
+        private const string PathCcacheBin = "/usr/local/bin/ccacheclang";
 
         /// <summary>
         /// 出力オプション種別
@@ -118,12 +132,43 @@ namespace XcodeArchiver
             sb.AppendFormat(" -sdk iphoneos");
             sb.AppendFormat(" -configuration Release");
             sb.AppendFormat(" -allowProvisioningUpdates");
-            sb.AppendFormat(" clean archive");
+            if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildClean) == "true")
+            {
+                sb.AppendFormat(" clean");
+            }
+            sb.AppendFormat(" archive");
             sb.AppendFormat(" CODE_SIGN_IDENTITY=\"iPhone Developer\"");
             sb.AppendFormat(" DEVELOPMENT_TEAM=\"{0}\"", PlayerSettings.iOS.appleDeveloperTeamID);
             if (!string.IsNullOrEmpty(PlayerSettings.iOS.iOSManualProvisioningProfileID))
             {
                 sb.AppendFormat(" PROVISIONING_PROFILE=\"{0}\"", PlayerSettings.iOS.iOSManualProvisioningProfileID);
+            }
+
+            // ビルド高速化のためにコンパイル対象を限界まで少なくする
+            if (EditorUserBuildSettings.development)
+            {
+                if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildEnableDebuggingSymbol) != "true")
+                {
+                    sb.AppendFormat(" GCC_GENERATE_DEBUGGING_SYMBOLS=NO");
+                }
+                sb.AppendFormat(" DEBUG_INFORMATION_FORMAT=dwarf");
+                sb.AppendFormat(" ONLY_ACTIVE_ARCH=YES");
+                sb.AppendFormat(" VALID_ARCHS=arm64");
+                // Bitcode は生成しない
+                if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildEnableBitcode) != "true")
+                {
+                    sb.AppendFormat(" ENABLE_BITCODE=NO");
+                }
+                // Debugging Symbol は出力しない
+                if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildEnableDebuggingSymbol) != "true")
+                {
+                    sb.AppendFormat(" DEBUGGING_SYMBOLS=NO");
+                }
+                // ccache を用いる
+                if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildUseCcache) != "false")
+                {
+                    sb.AppendFormat(" CC={0}", PathCcacheBin);
+                }
             }
 
             var process = new System.Diagnostics.Process
@@ -171,6 +216,20 @@ namespace XcodeArchiver
             sb.AppendFormat("<dict>\n");
             sb.AppendFormat("\t<key>method</key>\n");
             sb.AppendFormat("\t<string>{0}</string>\n", ExportOptionMap[exportOptionType]);
+            // ビルド高速化のために Bitcode と Debugging Symbol の生成は行わない
+            if (EditorUserBuildSettings.development)
+            {
+                if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildEnableBitcode) != "false")
+                {
+                    sb.AppendFormat("\t<key>uploadBitcode</key>\n");
+                    sb.AppendFormat("\t<false/>\n");
+                }
+                if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildEnableDebuggingSymbol) != "false")
+                {
+                    sb.AppendFormat("\t<key>uploadSymbols</key>\n");
+                    sb.AppendFormat("\t<false/>\n");
+                }
+            }
             // 一部の広告 SDK が Bitcode サポートしていないことがあったりする。
             sb.AppendFormat("\t<key>compileBitcode</key>\n");
             sb.AppendFormat("\t<false/>\n");
