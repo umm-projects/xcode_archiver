@@ -32,6 +32,8 @@ namespace XcodeArchiver
 
         private const string EnvironmentVariableBuildUseCcache = "BUILD_USE_CCACHE";
 
+        private const string EnvironmentVariableBuildFaster = "BUILD_FASTER";
+
         /// <summary>
         /// xcodebuild コマンドのパス
         /// </summary>
@@ -145,7 +147,7 @@ namespace XcodeArchiver
             }
 
             // ビルド高速化のためにコンパイル対象を限界まで少なくする
-            if (EditorUserBuildSettings.development)
+            if (EditorUserBuildSettings.development && Environment.GetEnvironmentVariable(EnvironmentVariableBuildFaster) != "false")
             {
                 if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildEnableDebuggingSymbol) != "true")
                 {
