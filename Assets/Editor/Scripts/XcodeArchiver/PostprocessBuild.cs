@@ -156,11 +156,6 @@ namespace XcodeArchiver
                 sb.AppendFormat(" DEBUG_INFORMATION_FORMAT=dwarf");
                 sb.AppendFormat(" ONLY_ACTIVE_ARCH=YES");
                 sb.AppendFormat(" VALID_ARCHS=arm64");
-                // Bitcode は生成しない
-                if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildEnableBitcode) != "true")
-                {
-                    sb.AppendFormat(" ENABLE_BITCODE=NO");
-                }
                 // Debugging Symbol は出力しない
                 if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildEnableDebuggingSymbol) != "true")
                 {
@@ -171,6 +166,12 @@ namespace XcodeArchiver
                 {
                     sb.AppendFormat(" CC={0}", PathCcacheBin);
                 }
+            }
+
+            // Bitcode は生成しない
+            if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildEnableBitcode) != "true")
+            {
+                sb.AppendFormat(" ENABLE_BITCODE=NO");
             }
 
             var process = new System.Diagnostics.Process
