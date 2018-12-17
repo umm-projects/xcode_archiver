@@ -186,6 +186,11 @@ namespace XcodeArchiver
             process.Start();
             process.WaitForExit();
             process.Close();
+            
+            if (process.ExitCode != 0)
+            {
+                EditorApplication.Exit(process.ExitCode);
+            }
         }
 
         private void ExecuteExport(ExportOptionType exportOptionType)
@@ -208,6 +213,11 @@ namespace XcodeArchiver
             process.Start();
             process.WaitForExit();
             process.Close();
+
+            if (process.ExitCode != 0)
+            {
+                EditorApplication.Exit(process.ExitCode);
+            }
         }
 
         private void GenerateExportOptionsPlist(ExportOptionType exportOptionType)
