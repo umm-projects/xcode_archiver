@@ -185,11 +185,12 @@ namespace XcodeArchiver
             };
             process.Start();
             process.WaitForExit();
+            var exitCode = process.ExitCode; // Close前にExitCode取得しないとエラー
             process.Close();
             
-            if (process.ExitCode != 0)
+            if (exitCode != 0)
             {
-                EditorApplication.Exit(process.ExitCode);
+                EditorApplication.Exit(exitCode);
             }
         }
 
@@ -212,11 +213,12 @@ namespace XcodeArchiver
             };
             process.Start();
             process.WaitForExit();
+            var exitCode = process.ExitCode; // Close前にExitCode取得しないとエラー
             process.Close();
 
-            if (process.ExitCode != 0)
+            if (exitCode != 0)
             {
-                EditorApplication.Exit(process.ExitCode);
+                EditorApplication.Exit(exitCode);
             }
         }
 
