@@ -107,10 +107,6 @@ namespace XcodeArchiver
             Prepare();
             ExecuteBuildAndArchive();
             ExecuteExport(ExportOptionType.AdHoc);
-            if (XcodeArchiverSetting.GetOrDefault().ShouldExportAppStoreArchive && !EditorUserBuildSettings.development)
-            {
-                ExecuteExport(ExportOptionType.AppStore);
-            }
         }
 
         private void Prepare()
