@@ -34,6 +34,10 @@ namespace XcodeArchiver
 
         private const string EnvironmentVariableBuildFaster = "BUILD_FASTER";
 
+        private const string EnvironmentVariableAppleDeveloperTeamID = "APPLE_DEVELOPER_TEAM_ID";
+
+        private const string EnvironmentVariableProvisioningProfileID = "IOS_PROVISIONING_PROFILE_ID";
+
         /// <summary>
         /// xcodebuild コマンドのパス
         /// </summary>
@@ -136,10 +140,23 @@ namespace XcodeArchiver
             }
             sb.AppendFormat(" archive");
             sb.AppendFormat(" CODE_SIGN_IDENTITY=\"iPhone Developer\"");
-            sb.AppendFormat(" DEVELOPMENT_TEAM=\"{0}\"", PlayerSettings.iOS.appleDeveloperTeamID);
-            if (!string.IsNullOrEmpty(PlayerSettings.iOS.iOSManualProvisioningProfileID))
+            var appleDeveloperTeamID = PlayerSettings.iOS.appleDeveloperTeamID;
+            if (string.IsNullOrEmpty(appleDeveloperTeamID))
             {
-                sb.AppendFormat(" PROVISIONING_PROFILE=\"{0}\"", PlayerSettings.iOS.iOSManualProvisioningProfileID);
+                appleDeveloperTeamID = Environment.GetEnvironmentVariable(EnvironmentVariableAppleDeveloperTeamID);
+            }
+            if (!string.IsNullOrEmpty(appleDeveloperTeamID))
+            {
+                sb.AppendFormat(" DEVELOPMENT_TEAM=\"{0}\"", appleDeveloperTeamID);
+            }
+            var iOSManualProvisioningProfileID = PlayerSettings.iOS.iOSManualProvisioningProfileID;
+            if (string.IsNullOrEmpty(iOSManualProvisioningProfileID))
+            {
+                iOSManualProvisioningProfileID = Environment.GetEnvironmentVariable(EnvironmentVariableProvisioningProfileID);
+            }
+            if (!string.IsNullOrEmpty(iOSManualProvisioningProfileID))
+            {
+                sb.AppendFormat(" PROVISIONING_PROFILE=\"{0}\"", iOSManualProvisioningProfileID);
             }
 
             // ビルド高速化のためにコンパイル対象を限界まで少なくする
