@@ -143,7 +143,7 @@ namespace XcodeArchiver
             }
 
             // ビルド高速化のためにコンパイル対象を限界まで少なくする
-            if (EditorUserBuildSettings.development && Environment.GetEnvironmentVariable(EnvironmentVariableBuildFaster) != "false")
+            if (EditorUserBuildSettings.development && Environment.GetEnvironmentVariable(EnvironmentVariableBuildFaster) == "true")
             {
                 if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildEnableDebuggingSymbol) != "true")
                 {
@@ -183,7 +183,7 @@ namespace XcodeArchiver
             process.WaitForExit();
             var exitCode = process.ExitCode; // Close前にExitCode取得しないとエラー
             process.Close();
-            
+
             if (exitCode != 0)
             {
                 EditorApplication.Exit(exitCode);
