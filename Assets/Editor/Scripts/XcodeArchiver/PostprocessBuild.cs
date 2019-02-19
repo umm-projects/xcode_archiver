@@ -201,7 +201,7 @@ namespace XcodeArchiver
             var exitCode = process.ExitCode; // Close前にExitCode取得しないとエラー
             process.Close();
 
-            if (exitCode != 0)
+            if (exitCode != 0 && Application.isBatchMode)
             {
                 EditorApplication.Exit(exitCode);
             }
@@ -229,7 +229,7 @@ namespace XcodeArchiver
             var exitCode = process.ExitCode; // Close前にExitCode取得しないとエラー
             process.Close();
 
-            if (exitCode != 0)
+            if (exitCode != 0 && Application.isBatchMode)
             {
                 EditorApplication.Exit(exitCode);
             }
