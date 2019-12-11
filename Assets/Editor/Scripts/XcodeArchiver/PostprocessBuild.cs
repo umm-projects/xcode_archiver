@@ -181,12 +181,6 @@ namespace XcodeArchiver
                 }
             }
 
-            // Bitcode は生成しない
-            if (Environment.GetEnvironmentVariable(EnvironmentVariableBuildEnableBitcode) != "true")
-            {
-                sb.AppendFormat(" ENABLE_BITCODE=NO");
-            }
-
             var process = new System.Diagnostics.Process
             {
                 StartInfo =
